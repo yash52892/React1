@@ -7,6 +7,7 @@ import classes from "./form.module.css";
 const Form = (props) => {
   const nameInputRef = useRef();
   const ageInputRef = useRef();
+  const cnameInputRef=useRef();
 
   const [error, setError] = useState();
 
@@ -14,6 +15,7 @@ const Form = (props) => {
     e.preventDefault();
     const enteredName = nameInputRef.current.value;
     const enteredUserAge = ageInputRef.current.value;
+    const enteredCname= cnameInputRef.current.value;
    
     if (enteredName.trim().length === 0 || enteredUserAge.trim().length === 0) {
       setError({
@@ -34,6 +36,7 @@ const Form = (props) => {
     const obj = {
       nam: enteredName,
       age: enteredUserAge,
+      cn: enteredCname,
       id: Math.random()
     };
     
@@ -41,6 +44,7 @@ const Form = (props) => {
     
     nameInputRef.current.value = '';
     ageInputRef.current.value = '';
+    cnameInputRef.current.value='';
   };
 
 
@@ -63,6 +67,8 @@ const Form = (props) => {
           <input type="text" id="name" ref={nameInputRef} />
           <label htmlFor="age">Age(years)</label>
           <input type="number" id="age" ref={ageInputRef} />
+          <label htmlFor="cname">College Name</label>
+          <input type="text" id="cname" ref={cnameInputRef} />
           <Button type="submit">Add User</Button>
         </form>
       </Card>
