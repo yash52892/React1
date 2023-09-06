@@ -7,7 +7,7 @@ const List = (props) => {
       {
       (Array.isArray(props.items))?((props.items).map((user) => (
         <li key={user.id}>
-            {user.nam} is {user.age} years old
+            {user.nam} is {user.age} years old and studying at {user.cn}
       </li>
       )
       )):
