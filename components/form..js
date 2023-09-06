@@ -1,31 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useRef, Fragment} from "react";
 import Error from "./Error";
 import Card from "./UI/Card";
 import Button from "./UI/Button";
 import classes from "./form.module.css";
 
 const Form = (props) => {
-  const [n, setname] = useState("");
-  const [a, setage] = useState("");
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+
   const [error, setError] = useState();
-
-  const obj = {
-    nam: n,
-    age: a,
-    id: Math.random(),
-  };
-
-  const collectname = (e) => {
-    setname(e.target.value);
-  };
-
-  const collectage = (e) => {
-    setage(e.target.value);
-  };
 
   const changeHandler = (e) => {
     e.preventDefault();
-    if (n.trim().length === 0 || a.trim().length === 0) {
+    const enteredName = nameInputRef.current.value;
+    const enteredUserAge = ageInputRef.current.value;
+   
+    if (enteredName.trim().length === 0 || enteredUserAge.trim().length === 0) {
       setError({
         title: "Invalid Input",
         message: "Please enter the valid input",
@@ -33,23 +23,33 @@ const Form = (props) => {
       return;
     }
 
-    if (+obj.age < 0) {
+    if (+enteredUserAge < 0) {
       setError({
         title: "Invalid Input",
         message: "Please enter the valid age(<0)",
       });
       return;
     }
+
+    const obj = {
+      nam: enteredName,
+      age: enteredUserAge,
+      id: Math.random()
+    };
+    
     props.userDetails(obj);
-    setname("");
-    setage("");
+    
+    nameInputRef.current.value = '';
+    ageInputRef.current.value = '';
   };
+
 
   const errorHandler = () => {
     setError(null);
   };
+
   return (
-    <div>
+    <Fragment>
       {error && (
         <Error
           title={error.title}
@@ -60,13 +60,13 @@ const Form = (props) => {
       <Card className={classes.input}>
         <form onSubmit={changeHandler}>
           <label htmlFor="username">Username</label>
-          <input type="text" id="name" value={n} onChange={collectname} />
+          <input type="text" id="name" ref={nameInputRef} />
           <label htmlFor="age">Age(years)</label>
-          <input type="number" id="age" value={a} onChange={collectage} />
+          <input type="number" id="age" ref={ageInputRef} />
           <Button type="submit">Add User</Button>
         </form>
       </Card>
-    </div>
+    </Fragment>
   );
 };
 
