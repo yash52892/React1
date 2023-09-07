@@ -33,6 +33,15 @@ const Form = (props) => {
       return;
     }
 
+    if(enteredCname.trim().length === 0)
+    {
+      setError({
+        title: "Form is not valid",
+        message: "Please enter the College name"
+        });
+        return;
+    }
+
     const obj = {
       nam: enteredName,
       age: enteredUserAge,
